@@ -172,6 +172,21 @@ docker run --name sonarqube-custom -p 9000:9000 sonarqube:community
     mvn clean verify sonar:sonar -Dsonar.token=TU_TOKEN_AQUI
     ```
 
+#### 🔒 Configuración con Archivo de Secretos (Recomendado)
+Para no escribir el token cada vez, crea un archivo llamado `sonar-secrets.properties` en la raíz del proyecto:
+
+**`sonar-secrets.properties`**
+```properties
+sonar.host.url=http://localhost:9000
+sonar.token=sqp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+*(Este archivo está ignorado por git para seguridad)*
+
+Luego puedes ejecutar simplemente:
+```bash
+mvn clean verify sonar:sonar
+```
+
 ---
 
 ## 📚 Documentación de API (Swagger)
