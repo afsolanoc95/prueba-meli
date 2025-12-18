@@ -47,8 +47,8 @@ graph LR
     User((Usuario)) 
     
     subgraph Roles
-        Seller[ROLE_SELLER<br>Vendedor]
-        Buyer[ROLE_BUYER<br>Comprador]
+        Seller["ROLE_SELLER<br>Vendedor"]
+        Buyer["ROLE_BUYER<br>Comprador"]
     end
     
     User -->|Login| Auth[AuthController]
@@ -124,7 +124,24 @@ Para una explicación detallada, ver [DESIGN_PATTERNS.md](DESIGN_PATTERNS.md).
 
 ---
 
-## 🚀 Guía de Instalación y Ejecución
+## �️ Resiliencia y Circuit Breaker
+Este proyecto implementa el patrón **Circuit Breaker** usando la librería [Resilience4j](https://resilience4j.readme.io/) para prevenir fallos en cascada cuando un servicio o base de datos falla.
+
+### ¿Cómo funciona?
+El Circuit Breaker actúa como un interruptor eléctrico:
+1.  **CLOSED (Cerrado):** Estado normal. Las peticiones fluyen. Si ocurren fallos (ej. >50%), el circuito se abre.
+2.  **OPEN (Abierto):** Bloquea todas las peticiones inmediatamente para no saturar el sistema fallido.
+3.  **HALF-OPEN (Semi-abierto):** Después de un tiempo de espera (`30s`), deja pasar algunas peticiones de prueba. Si funcionan, vuelve a *Closed*; si fallan, vuelve a *Open*.
+
+### Configuración (en `application.properties`)
+- **Umbral de Fallo:** 50%
+- **Ventana Deslizante:** Últimas 4 llamadas
+- **Tiempo de Espera en Open:** 30 segundos
+- **Excepciones Ignoradas:** `NoSuchResourceFoundException` (Un 404 no cuenta como fallo del sistema).
+
+---
+
+## �🚀 Guía de Instalación y Ejecución
 
 ### Prerrequisitos
 - Java 21
@@ -218,3 +235,10 @@ La base de datos H2 se carga automáticamente con datos de prueba (`data.sql`).
 | `buyer` | `password` | Comprador |
 
 Usa estas credenciales en el endpoint `/api/auth/login` para obtener tu token Bearer.
+
+---
+
+## 🔗 Acceso Rápido a Base de Datos
+Si necesitas inspeccionar o editar las tablas directamente:
+- **Consola H2:** [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+- **JDBC URL:** `jdbc:h2:mem:melidb`
