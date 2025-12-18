@@ -18,19 +18,19 @@ La aplicación sigue una arquitectura en capas clásica, optimizada para manteni
 
 ```mermaid
 graph TD
-    Client[Cliente / Frontend] --> LB[Load Balancer / Ingress]
-    LB --> Controller[Controller Layer<br>(REST Endpoints)]
+    Client["Cliente / Frontend"] --> LB["Load Balancer / Ingress"]
+    LB --> Controller["Controller Layer<br>(REST Endpoints)"]
     
     subgraph "Application Core"
-        Controller --> Security[Security Filter Chain<br>(JWT Auth)]
-        Controller --> Service[Service Layer<br>(Business Logic)]
-        Service --> Mapper[Mappers<br>(DTO <-> Entity)]
-        Service --> Resilience[Circuit Breakers<br>(Resilience4j)]
+        Controller --> Security["Security Filter Chain<br>(JWT Auth)"]
+        Controller --> Service["Service Layer<br>(Business Logic)"]
+        Service --> Mapper["Mappers<br>(DTO <-> Entity)"]
+        Service --> Resilience["Circuit Breakers<br>(Resilience4j)"]
     end
     
     subgraph "Data Persistence"
-        Service --> Repository[Repository Layer<br>(JPA/Hibernate)]
-        Repository --> DB[(H2 Database<br>In-Memory)]
+        Service --> Repository["Repository Layer<br>(JPA/Hibernate)"]
+        Repository --> DB[("H2 Database<br>In-Memory")]
     end
 
     subgraph "Observability"
