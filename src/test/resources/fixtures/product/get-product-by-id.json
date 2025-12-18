@@ -1,0 +1,10 @@
+{
+    "id": 1,
+    "title": "Samsung Galaxy S24",
+    "price": 999.99,
+    "originalPrice": 1100.00,
+    "currency": "USD",
+    "availableQuantity": 100,
+    "condition": "new",
+    "sellerId": 1
+}

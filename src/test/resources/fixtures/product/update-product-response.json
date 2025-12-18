@@ -1,0 +1,10 @@
+{
+    "id": 1,
+    "title": "Updated Product",
+    "price": 179.99,
+    "originalPrice": 199.99,
+    "currency": "USD",
+    "availableQuantity": 10,
+    "condition": "new",
+    "sellerId": 1
+}

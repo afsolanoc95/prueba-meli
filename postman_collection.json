@@ -1,0 +1,480 @@
+{
+    "info": {
+        "_postman_id": "8e308f23-3b12-4c6e-9a1b-3c4d5e6f7a8b",
+        "name": "Meli Bootcamp API - Security Complete",
+        "description": "Full Collection with JWT Auth & RBAC.\n\n**Instructions:**\n1. Run 'Login Seller' or 'Login Buyer'.\n2. The token is automatically saved.\n3. Test the endpoints labeled with roles.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Login Seller",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "pm.collectionVariables.set(\"token\", jsonData.token);",
+                                    "console.log(\"Seller Token set: \" + jsonData.token);"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"seller\",\n    \"password\": \"password\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/login",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Login Buyer",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "pm.collectionVariables.set(\"token\", jsonData.token);",
+                                    "console.log(\"Buyer Token set: \" + jsonData.token);"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"buyer\",\n    \"password\": \"password\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/login",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/auth/logout",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "logout"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Products",
+            "item": [
+                {
+                    "name": "Get All Products (Public)",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/products",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Product By ID (Public)",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/products/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Product (Seller Only)",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"New Gaming Laptop\",\n    \"price\": 1500.00,\n    \"originalPrice\": 1800.00,\n    \"currency\": \"USD\",\n    \"availableQuantity\": 10,\n    \"condition\": \"new\",\n    \"description\": \"High performance laptop\",\n    \"warranty\": \"2 years\",\n    \"sellerId\": 1,\n    \"imageUrls\": [\n        \"http://example.com/img1.jpg\"\n    ],\n    \"attributes\": [\n        {\"name\": \"RAM\", \"value\": \"32GB\"}\n    ]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/products",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Product (Seller Only)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"Updated Gaming Laptop\",\n    \"price\": 1400.00\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/products/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Product (Seller Only)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/products/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Reviews",
+            "item": [
+                {
+                    "name": "Get Product Reviews (Public)",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/products/1/reviews",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products",
+                                "1",
+                                "reviews"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Add Review (Buyer Only)",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"rating\": 5,\n    \"comment\": \"Amazing product!\",\n    \"userName\": \"BuyerUser\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/products/1/reviews",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products",
+                                "1",
+                                "reviews"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Review (Buyer Only)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"rating\": 4,\n    \"comment\": \"Actually, it's pretty good, but not perfect.\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/products/1/reviews/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products",
+                                "1",
+                                "reviews",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Review (Buyer Only)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/products/1/reviews/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products",
+                                "1",
+                                "reviews",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Questions",
+            "item": [
+                {
+                    "name": "Get Product Questions (Public)",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/products/1/questions",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products",
+                                "1",
+                                "questions"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Ask Question (Buyer Only)",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"question\": \"Does it have warranty?\",\n    \"userName\": \"BuyerUser\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/products/1/questions",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products",
+                                "1",
+                                "questions"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Answer Question (Seller Only)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"answer\": \"Yes, 2 years.\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/products/1/questions/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products",
+                                "1",
+                                "questions",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Question (Buyer Only)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/products/1/questions/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "products",
+                                "1",
+                                "questions",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+            }
+        ]
+    },
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8080/api",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "",
+            "type": "string"
+        }
+    ]
+}
